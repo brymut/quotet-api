@@ -8,7 +8,7 @@ class Category(models.Model):
         return self.name
 
 class Item(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
     # add image when s3 is set up
@@ -26,7 +26,7 @@ class Contact(models.Model):
         return self.contact_type
 
 class HomepageInfo(models.Model):
-    title = models.CharField()
+    title = models.CharField(max_length=100)
     content = models.TextField()
 
     def __str__(self):
@@ -34,8 +34,8 @@ class HomepageInfo(models.Model):
 
 
 class Event(models.Model):
-    title = models.CharField()
-    location = models.CharField()
+    title = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
     active = models.BooleanField(default=True)
     time = models.DateTimeField(auto_now=False, auto_now_add=False)
     content = models.TextField()
