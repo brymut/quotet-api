@@ -29,7 +29,7 @@ SECRET_KEY = config['SECURITY_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config['ALLOWED_HOSTS']
 
 
 # Application definition
@@ -43,9 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'quotetapi',
+    'corsheaders',
+    'django_s3_storage'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,8 +75,24 @@ TEMPLATES = [
         },
     },
 ]
+# The AWS region to connect to.
+AWS_REGION = "eu-west-2"
+
+AWS_ACCESS_KEY_ID = config['AWS_ACCESS_KEY']
+
+AWS_SECRET_ACCESS_KEY = config['AWS_SECRET_KEY']
 
 WSGI_APPLICATION = 'quotet_api.wsgi.application'
+STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+DEFAULT_FILE_STORAGE = "django_s3_storage.storage.S3Storage"
+
+
+S3_BUCKET = config['S3_BUCKET']
+
+AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET
+
+STATIC_URL = "https://s3.eu-west-2.amazonaws.com/%s/" % S3_BUCKET
+
 
 
 # Database
@@ -128,3 +147,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_ALLOW_ALL = True

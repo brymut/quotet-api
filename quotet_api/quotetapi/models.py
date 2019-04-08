@@ -7,6 +7,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Item(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -31,6 +35,9 @@ class HomepageInfo(models.Model):
 
     def __str__(self):
         return self.choice_text
+    
+    class Meta:
+        verbose_name_plural = "Homepage Information"
 
 
 class Event(models.Model):
@@ -41,4 +48,4 @@ class Event(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return self.choice_text
+        return self.title
